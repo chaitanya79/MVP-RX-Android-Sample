@@ -11,6 +11,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -35,8 +36,6 @@ public class ServiceGenerator {
     @Inject
     public ServiceGenerator(Gson gson) {
         this.okHttpBuilder = new OkHttpClient.Builder();
-//        HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
-//        logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         okHttpBuilder.addInterceptor(headerInterceptor);
         okHttpBuilder.connectTimeout(TIMEOUT_CONNECT, TimeUnit.SECONDS);
         okHttpBuilder.readTimeout(TIMEOUT_READ, TimeUnit.SECONDS);
@@ -46,10 +45,9 @@ public class ServiceGenerator {
     public <S> S createService(Class<S> serviceClass, String baseUrl) {
         OkHttpClient client = okHttpBuilder.build();
         retrofit = new Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .client(client)
+            .baseUrl(baseUrl).client(client)
             .addConverterFactory(GsonConverterFactory.create(gson))
-            .build();
+            .addCallAdapterFactory(RxJavaCallAdapterFactory.create()).build();
         return retrofit.create(serviceClass);
     }
 

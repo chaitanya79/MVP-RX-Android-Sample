@@ -4,6 +4,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 import com.task.App;
 import com.task.R;
 import com.task.data.remote.dto.NewsItem;
@@ -56,7 +57,13 @@ public class DetailsActivity extends BaseActivity implements DetailsView {
         if (!isEmpty(newsItem.getTitle())) {
             tvTitle.setText(newsItem.getTitle());
         }
-        String url = isEmpty(presenter.getMainImageURL()) ? "" : presenter.getMainImageURL();
-        Picasso.with(this).load(url).placeholder(R.drawable.news).into(ivMainImage);
+        Picasso picasso = Picasso.with(this);
+        RequestCreator requestCreator;
+        if (!isEmpty(presenter.getMainImageURL())) {
+            requestCreator = picasso.load(presenter.getMainImageURL());
+        } else {
+            requestCreator = picasso.load(R.drawable.news);
+        }
+        requestCreator.placeholder(R.drawable.news).into(ivMainImage);
     }
 }

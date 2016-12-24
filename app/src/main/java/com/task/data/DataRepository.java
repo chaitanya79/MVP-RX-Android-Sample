@@ -2,9 +2,13 @@ package com.task.data;
 
 import com.task.data.local.LocalRepository;
 import com.task.data.remote.ApiRepository;
-import com.task.data.remote.ResponseWrapper;
+import com.task.data.remote.dto.NewsModel;
 
 import javax.inject.Inject;
+
+import retrofit2.Response;
+import rx.Observable;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by AhmedEltaher on 5/12/2016
@@ -20,8 +24,9 @@ public class DataRepository {
         this.localRepository = localRepository;
     }
 
-    public ResponseWrapper requestNews() {
-        ResponseWrapper response = apiRepository.getNews();
-        return response;
+    public Observable<Response<NewsModel>> requestNews() {
+        Observable<Response<NewsModel>> observableNewsModel =
+            apiRepository.getNews().subscribeOn(Schedulers.io());
+        return observableNewsModel;
     }
 }
