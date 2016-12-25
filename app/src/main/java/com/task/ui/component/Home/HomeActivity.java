@@ -120,4 +120,10 @@ public class HomeActivity extends BaseActivity implements HomeView {
                 presenter.onSearchClick(editTextSearch.getText().toString());
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.unSubscribe();
+    }
 }

@@ -45,6 +45,10 @@ public class NewsUseCase {
         return null;
     }
 
+    public void unSubscribe() {
+        mSubscriptions.unsubscribe();
+    }
+
     public interface Callback {
         void onSuccess(NewsModel newsModel);
 

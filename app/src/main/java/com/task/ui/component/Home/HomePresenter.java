@@ -43,6 +43,10 @@ public class HomePresenter extends Presenter<HomeView> {
         newsUseCase.getNews(callback);
     }
 
+    public void unSubscribe() {
+        newsUseCase.unSubscribe();
+    }
+
     public RecyclerItemListener getRecyclerItemListener() {
         return recyclerItemListener;
     }
