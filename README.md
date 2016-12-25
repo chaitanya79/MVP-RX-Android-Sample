@@ -1,49 +1,124 @@
-**What is MVP ?**
-=============
- - **View :** is a layer that displays data and reacts to user actions. On
-   Android, this could be an Activity, a Fragment, an android.view.View
-   or a Dialog.
- - **Model :** is a data access layer such as database API or remote server API.
- - **Presenter:** is a layer that provides View with data from Model. Presenter also handles background tasks.
 
+
+**What is ReactiveX ?**
+-------------------
+
+![enter image description here](https://lh3.googleusercontent.com/-i2XiOiLr-u4/WGDnM23c8cI/AAAAAAAAHho/MnkItYDyelofBkilkIM8x99tH__EtHP5gCLcB/s0/Reactive+logo.png "Reactive logo.png")
+
+======
+ **Reactive :**
+Reactive programming is a programming paradigm oriented around data flows and the propagation of change. 
+ Reactive programming is programming with asynchronous data streams.
+ 
+ **ReactiveX :** 
+	 - Is a library for composing asynchronous and event-based programs by using observable sequences.
+ It extends the observer pattern to support sequences of data and/or events and adds operators that allow you to compose sequences together declaratively while abstracting away concerns about things like low-level threading, synchronization, thread-safety, concurrent data structures, and non-blocking I/O.
+	 - Rx* library family is widely available for many languages and platforms (**.NET**, **Java** , **Scala**, **Clojure**, **JavaScript**, **Ruby**, **Python**, **C++**, **Objective-C/Cocoa**, **Groovy**, etc).
 
 ----------
 
-On Android MVP is a way to separate background tasks from activities/views/fragments to make them independent of most lifecycle-related events. This way an application becomes simpler, overall application reliability increases up to 10 times, application code becomes shorter, code maintainability becomes better and developer's life becomes happier.
-
-----------
-
-**MVP vs MVC ?**
+**What is RXAndroid ?**
+-------------------
+ - Extended version from RX-Java to Android .
+ - RXAndroid provides many classes which facilities working with android , like 
+			- **AndroidSchedulers**  for facilitating managing multi-threading.
+			- **AndroidObservable** for facilitating dealing within the Android lifecycle.
+			- **ViewObservable** & **WidgetObservable** for facilitating binding views , user clicks ... ect.
+			
+**How RX concept works ?**
 ------------
-![enter image description here](https://lh3.googleusercontent.com/-z-YMiy8M_c8/WFh1GtNsenI/AAAAAAAAHdk/GkpPq_Y3C6EMz2s0NVS9RHfUOOwQqh0_QCLcB/s0/Screen+Shot+2016-12-20+at+01.01.14.png "Screen Shot 2016-12-20 at 01.01.14.png")
+ - An Observable performs some action, and publishes the result.
+ - An Observer waits and watches the Observable, and reacts whenever the
+   Observable publishes results.
+ - There are three different changes that can occur on an Observable
+   that the Observer reacts to.
+   These are:
+	 - Publishing a value
+	 - Throwing an error 
+	 - Completed publishing all values
 
-**What is MVP Pros and Cons?**
+![enter image description here](https://lh3.googleusercontent.com/-x2b7sqpd2Sc/WGDq4bCkp5I/AAAAAAAAHiI/lhgC2hiEbdgSPlYsA2-VdVxAeJxqzf-egCLcB/s0/legend.png "legend.png")
+
+![enter image description here](https://lh3.googleusercontent.com/-vaRTC6UYzuw/WGBj79pJEhI/AAAAAAAAHg0/LeEE3msb9JE_RFtfw34y8yy9EqPOo5KuACLcB/s0/gif-react22.gif "gif-react22.gif")
+
+**When I can choose RXAndroid to do some behaviour ?**
 --------------------------
-***Pros***
- - Testable ( leading to TDD ) 
- - Maintainable ( Code reuse ) 
- - Easy to get reviewed 
- - Information Hiding
+ - *When we have concurrent tasks , like you would fetch data from Remote connections , database , any background processes .*
+ - *When you would to handle stream of UI actions like : user scrolling , clicks , update UI upon some events .....ect .*
+ 
 
-***Cons***
- - Redundant, especially when the app size is small
- - Extra learning curve( maybe )
- - Requires time before starting coding ( but I bet, the architecture
-   step is the must step for all development )
-
------------------------------------------------------------
-
-***How does It work ?***
+**What is the RXAndroid benefits?**
 -----------------------------
-*simple and clean way , all of your calls have to be in only one direction , that is mean you shouldn't have any reference from your presenter in your useCase , and reference from your useCase in your entities , but can have a reference from useCase to presenter and from your presenter to your Android Main component (Activity , Fragment , Service , BroadCast Receiver ...... ) .*
+RXAndroid will provide you to deal with below problems in one fell swoop:
 
-![enter image description here](https://lh3.googleusercontent.com/-2j5KgH7iCH4/WFhwfTovV4I/AAAAAAAAHdU/RHJs6oeqBjIoANU1wBBXy_QkH3kff85tgCLcB/s0/MVP.png "MVP.png")
+ - No standard mechanism to recover from errors.
+ - Lack of control over thread scheduling (unless you like to dig deep).
+ - No obvious way to compose asynchronous operations.
+ - No obvious and hassle-free way of attaching to Context.
 
 
-----------
-
-**Interaction between Component**
+**Handle Retrofit with RXAndroid**
 -----------------------------
-*The objective is the separation of concerns by keeping the business rules not knowing anything at all about the outside world, thus, they can be tested without any dependency to any external element. To achieve this, my proposal is about breaking up the project into 3 different layers, in which each one has its own purpose and works separately from the others. It is worth mentioning that each layer uses its own data model so this independence*
 
-![enter image description here](https://lh3.googleusercontent.com/-w6E0Cb-3xIc/WFh7BpXCBOI/AAAAAAAAHd8/yycsUCNHoK8YB6rRggyybbUKcNzrKjvfACLcB/s0/Screen+Shot+2016-12-20+at+01.17.19.png "Screen Shot 2016-12-20 at 01.17.19.png")
+![enter image description here](https://lh3.googleusercontent.com/d2slx7bI7Ivykea1Umfo2mMvZVTnO19ifeuJidyZJB6L3u7rlhwlBtp7tsZgrshWiToqz4pW=s0 "retrofit-reactivex-300x150.png")
+
+ - Add RX to your gradle file 
+
+        compile 'io.reactivex:rxandroid:1.2.1'
+        compile 'io.reactivex:rxjava:1.1.6'
+        compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
+
+ - Replace Retrofit Call with Observable .
+		 **From**
+		 ```@GET("topstories/v2/home.json")
+		 Call<NewsModel> fetchNews();```
+         **to**	     	
+	     ```@GET("topstories/v2/home.json")
+     Observable<Response<NewsModel>> fetchNews();```
+
+ - Create  `Observable` 
+	 10. Inform your Observable to emit data in background thread with `subscribeOn(Schedulers.io())` .
+	 11.  Inform your Observable to propagate its stream of data to Main Thread with`observeOn(AndroidSchedulers.mainThread())` .
+	 12. Register your subscriber to current Observable with ` subscribe(mSubscriber)`
+	 ```
+Observable
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(mSubscriber);
+```
+
+
+	 13. create subscriber
+	 
+	 
+	 ```
+	 Subscriber mSubscriber=new Subscriber<Response<NewsModel>>() {
+            @Override
+            public void onCompleted() { //handle what should you do after Observable complete its emission , like dismiss dialog , build UI .
+                 }
+            @Override
+            public void onError(Throwable e) {
+                //Handle your error
+                 }
+            @Override
+            public void onNext(Response<NewsModel> newsModelResponse) {
+                // handle what should you do after receive each emission from observer , like update progress .... ect .
+                }
+        };
+```
+
+
+**Keep your code clean according to MVP**
+-----------------------------
+ - yes , RXAndroid is easy , powerful , but you should know in which MVP
+          layer you will put it .
+ - for observables which will emit data stream , it has to be in your
+   data layer , and don't inform those observables any thing else like
+   in which thread those will consume , cause it is another
+   responsibility , and according to `Single responsibility principle`
+   in `SOLID (object-oriented design)` , so don't break this concept by
+   mixing every thing due to RXAndroid ease .
+
+
+![enter image description here](https://lh3.googleusercontent.com/-C7BXAK1LhZk/WGFSXnV6UvI/AAAAAAAAHiw/7-r9dmdNyAIsjsOueZICV7PSoLtkPOEBACLcB/s0/MVP.jpg "MVP.jpg")
+
