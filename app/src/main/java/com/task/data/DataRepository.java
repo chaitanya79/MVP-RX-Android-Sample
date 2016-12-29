@@ -6,7 +6,6 @@ import com.task.data.remote.dto.NewsModel;
 
 import javax.inject.Inject;
 
-import retrofit2.Response;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
@@ -24,8 +23,8 @@ public class DataRepository {
         this.localRepository = localRepository;
     }
 
-    public Observable<Response<NewsModel>> requestNews() {
-        Observable<Response<NewsModel>> observableNewsModel =
+    public Observable<NewsModel> requestNews() {
+        Observable<NewsModel> observableNewsModel =
             apiRepository.getNews().subscribeOn(Schedulers.io());
         return observableNewsModel;
     }

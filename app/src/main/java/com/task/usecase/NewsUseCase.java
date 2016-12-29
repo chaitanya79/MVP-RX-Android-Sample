@@ -11,6 +11,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -29,8 +30,9 @@ public class NewsUseCase {
     }
 
     public void getNews(final Callback callback) {
-        mSubscriptions.add(dataRepository.requestNews().observeOn(AndroidSchedulers.mainThread())
-            .subscribe(newsModelResponse -> callback.onSuccess(newsModelResponse.body()),
+        mSubscriptions.add(dataRepository.requestNews().subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(newsModel -> callback.onSuccess(newsModel),
                 exception -> {
                     callback.onFail();
                 }));

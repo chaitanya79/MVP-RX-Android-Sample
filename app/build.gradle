@@ -59,9 +59,6 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.3.0'
     //picasso
     compile 'com.squareup.picasso:picasso:2.5.2'
-    // google maps
-    compile 'com.google.maps:google-maps-services:0.1.16'
-    compile 'com.google.android.gms:play-services:10.0.1'
     //MultiDex
     compile 'com.android.support:multidex:+'
     //ParcelablePlease
