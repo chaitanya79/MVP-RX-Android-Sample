@@ -12,5 +12,5 @@ public interface ActionBarView {
 
     void setSettingsIconVisibility(boolean visibility);
 
-    void setMapIconVisibility(boolean visibility);
+    void setRefreshVisibility(boolean visibility);
 }

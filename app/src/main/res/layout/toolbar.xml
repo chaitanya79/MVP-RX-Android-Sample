@@ -24,10 +24,10 @@
             android:text="@string/news"/>
 
         <ImageView
-            android:id="@+id/ic_toolbar_map"
+            android:id="@+id/ic_toolbar_setting"
             style="@style/toolbar_right_style"
             android:visibility="gone"
-            android:src="@android:drawable/ic_dialog_map"/>
+            android:src="@android:drawable/ic_menu_preferences"/>
 
         <ImageView
             android:id="@+id/ic_toolbar_refresh"

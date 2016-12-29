@@ -110,7 +110,7 @@ public class HomeActivity extends BaseActivity implements HomeView {
         Snackbar.make(rlNewsList, getString(R.string.news_error), LENGTH_SHORT).show();
     }
 
-    @OnClick({R.id.ic_toolbar_map, R.id.ic_toolbar_refresh, R.id.btn_search})
+    @OnClick({R.id.ic_toolbar_setting, R.id.ic_toolbar_refresh, R.id.btn_search})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ic_toolbar_refresh:
